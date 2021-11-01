@@ -31,23 +31,24 @@ class ViewController: UIViewController {
         }
     }
     
-    let dataArray =  ["http://www.httpwatch.com/httpgallery/authentication/authenticatedimage/default.aspx?0.35786508303135633",     // requires HTTP auth, used to demo the NTLM auth
-                      "http://assets.sbnation.com/assets/2512203/dogflops.gif",
-                      "https://raw.githubusercontent.com/liyong03/YLGIFImage/master/YLGIFImageDemo/YLGIFImageDemo/joy.gif",
-                      "http://apng.onevcat.com/assets/elephant.png",
-                      "http://www.ioncannon.net/wp-content/uploads/2011/06/test2.webp",
-                      "https://swapface.mycolordiary.com/s/img/fd5c691aaca58d8ed7c87b950c23ae74",
-                      "https://swapface.mycolordiary.com/s/img/18fa464e31922aa531ee2ac57ed11cbf",
-                      "http://www.ioncannon.net/wp-content/uploads/2011/06/test9.webp",
-                      "http://littlesvr.ca/apng/images/SteamEngine.webp",
-                      "http://littlesvr.ca/apng/images/world-cup-2014-42.webp",
-                      "https://isparta.github.io/compare-webp/image/gif_webp/webp/2.webp",
-                      "https://nokiatech.github.io/heif/content/images/ski_jump_1440x960.heic",
-                      "https://nokiatech.github.io/heif/content/image_sequences/starfield_animation.heic",
-                      "https://s2.ax1x.com/2019/11/01/KHYIgJ.gif",
-                      "https://raw.githubusercontent.com/icons8/flat-color-icons/master/pdf/stack_of_photos.pdf",
-                      "https://nr-platform.s3.amazonaws.com/uploads/platform/published_extension/branding_icon/275/AmazonS3.png",
-                      "http://via.placeholder.com/200x200.jpg"]
+    let dataArray =  [
+        "http://www.httpwatch.com/httpgallery/authentication/authenticatedimage/default.aspx?0.35786508303135633",     // requires HTTP auth, used to demo the NTLM auth
+        "http://assets.sbnation.com/assets/2512203/dogflops.gif",
+        "https://raw.githubusercontent.com/liyong03/YLGIFImage/master/YLGIFImageDemo/YLGIFImageDemo/joy.gif",
+        "http://apng.onevcat.com/assets/elephant.png",
+        "http://www.ioncannon.net/wp-content/uploads/2011/06/test2.webp",
+        "https://swapface.mycolordiary.com/s/img/fd5c691aaca58d8ed7c87b950c23ae74",
+        "https://swapface.mycolordiary.com/s/img/18fa464e31922aa531ee2ac57ed11cbf",
+        "http://www.ioncannon.net/wp-content/uploads/2011/06/test9.webp",
+        "http://littlesvr.ca/apng/images/SteamEngine.webp",
+        "http://littlesvr.ca/apng/images/world-cup-2014-42.webp",
+        "https://isparta.github.io/compare-webp/image/gif_webp/webp/2.webp",
+        "https://nokiatech.github.io/heif/content/images/ski_jump_1440x960.heic",
+        "https://nokiatech.github.io/heif/content/image_sequences/starfield_animation.heic",
+        "https://s2.ax1x.com/2019/11/01/KHYIgJ.gif",
+        "https://raw.githubusercontent.com/icons8/flat-color-icons/master/pdf/stack_of_photos.pdf",
+        "https://nr-platform.s3.amazonaws.com/uploads/platform/published_extension/branding_icon/275/AmazonS3.png",
+        "http://via.placeholder.com/200x200.jpg"]
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -63,8 +64,15 @@ extension ViewController: UICollectionViewDataSource {
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CustomCell
-
-        cell.imageView.sd_setImage(with: URL(string: dataArray[indexPath.row]), placeholderImage: nil, options: [.retryFailed], context: [.imageThumbnailPixelSize: CGSize(width: Int(cell.bounds.size.width), height: Int(cell.bounds.size.height))]) { receivedSize, expectedSize, targetUrl in
+        
+        cell.imageView
+            .sd_setImage(with: URL(string: dataArray[indexPath.row]),
+                         placeholderImage: nil,
+                         options: [.retryFailed],
+                         context: [.imageThumbnailPixelSize:
+                                    CGSize(width: Int(cell.bounds.size.width),
+                                           height: Int(cell.bounds.size.height))])
+        { receivedSize, expectedSize, targetUrl in
             
         } completed: { image, error, from, url in
             if let e = error {
@@ -93,8 +101,6 @@ class CustomCell: UICollectionViewCell {
     }()
     
     override func prepareForReuse() {
-//        imageView.image = nil
-//        imageView.startAnimating()
         super.prepareForReuse()
     }
     override func layoutSubviews() {
